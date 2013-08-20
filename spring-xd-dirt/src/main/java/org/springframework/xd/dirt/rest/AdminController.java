@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -55,14 +54,17 @@ public class AdminController {
 	// return xdRuntime;
 	// }
 
-	/**
-	 * This RequestMapping exists to handle CORS requests only Ensures that our custom
-	 * HandlerInterceptor is called
-	 */
-	@ResponseBody
-	@RequestMapping(value = "**", method = RequestMethod.OPTIONS)
-	public String options() {
-		return "OK";
-	}
+	// TODO comment out for now. Handling OPTIONS requests here is preventing the Static
+	// resource handler from
+	// serving GET requests from /admin-ui/**
+	// /**
+	// * This RequestMapping exists to handle CORS requests only Ensures that our custom
+	// HandlerInterceptor is called
+	// */
+	// @ResponseBody
+	// @RequestMapping(value = "**", method = RequestMethod.OPTIONS)
+	// public String options() {
+	// return "OK";
+	// }
 
 }

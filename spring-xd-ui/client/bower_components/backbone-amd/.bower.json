@@ -1,0 +1,13 @@
+{
+  "name": "backbone-amd",
+  "homepage": "https://github.com/amdjs/backbone",
+  "version": "0.9.10",
+  "_release": "0.9.10",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.9.10",
+    "commit": "78d327fac95281fc5d7a2d4a069940adf645aa4e"
+  },
+  "_source": "git://github.com/amdjs/backbone.git",
+  "_target": "0.9.10"
+}
