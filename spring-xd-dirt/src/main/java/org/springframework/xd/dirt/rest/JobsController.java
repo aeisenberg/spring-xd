@@ -34,20 +34,19 @@ import org.springframework.xd.rest.client.domain.JobDefinitionResource;
 
 /**
  * Handles all Job related interactions.
- *
+ * 
  * @author Glenn Renfro
  * @author Gunnar Hillert
  * @since 1.0
  */
 @Controller
-@RequestMapping("/jobs")
+// jobs should be handled by spring batch admin
+@RequestMapping("/jobsXXXXX")
 @ExposesResourceFor(JobDefinitionResource.class)
-public class JobsController extends
-		XDController<JobDefinition, JobDefinitionResourceAssembler, JobDefinitionResource> {
+public class JobsController extends XDController<JobDefinition, JobDefinitionResourceAssembler, JobDefinitionResource> {
 
 	@Autowired
-	public JobsController(JobDeployer jobDeployer,
-			JobDefinitionRepository jobDefinitionRepository) {
+	public JobsController(JobDeployer jobDeployer, JobDefinitionRepository jobDefinitionRepository) {
 		super(jobDeployer, new JobDefinitionResourceAssembler());
 	}
 
@@ -62,10 +61,9 @@ public class JobsController extends
 		return listValues(pageable, assembler);
 	}
 
-
+	@Override
 	protected JobDefinition createDefinition(String name, String definition) {
 		return new JobDefinition(name, definition);
 	}
-
 
 }

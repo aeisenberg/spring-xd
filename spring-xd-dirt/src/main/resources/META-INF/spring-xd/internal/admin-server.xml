@@ -2,16 +2,46 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:batch="http://www.springframework.org/schema/batch"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+
+	<import resource="classpath*:/META-INF/spring/batch/bootstrap/manager/env-context.xml"/>
+<!--
+ 	<import resource="classpath*:/org/springframework/batch/admin/web/resources/servlet-config.xml"/>
+	<import resource="classpath*:/org/springframework/batch/admin/web/resources/webapp-config.xml"/>
+	<import resource="classpath*:/META-INF/spring/batch/servlet/resources/*.xml" />
+ -->	
 	<import resource="deployers.xml" />
 
 	<import resource="classpath*:/META-INF/spring-xd/transports/${xd.transport}-admin.xml"/>
 	<import resource="classpath*:/META-INF/spring-xd/store/${xd.store}-admin.xml"/>
 	
+ 	<import resource="classpath*:/META-INF/spring/batch/servlet/manager/*.xml" />
+ 	<import resource="classpath*:/META-INF/spring/batch/servlet/override/*.xml" />
+	<import resource="classpath*:/META-INF/spring/batch/bootstrap/**/*.xml" />
+ 	<import resource="classpath*:/META-INF/spring/batch/override/**/*.xml" />
+	
+	
+	<import resource="classpath*:/META-INF/spring/batch/bootstrap/manager/execution-context.xml"/>
+	<import resource="classpath*:/META-INF/spring/batch/bootstrap/manager/data-source-context.xml"/>
+	<import resource="classpath*:/META-INF/spring-xd/batch/resources-context.xml"/>
+	<import resource="classpath*:/META-INF/spring-xd/batch/module-context.xml"/>
+	
 	<context:component-scan base-package="org.springframework.xd.dirt.rest" use-default-filters="false">
 		<!-- Include only this @Configuration classes, which will in turn include others -->
 		<context:include-filter type="regex" expression="org.springframework.xd.dirt.rest.RestConfiguration"/>
 	</context:component-scan>
+	
+	
+	<bean class="java.util.ArrayList">
+			<constructor-arg>
+        <list>
+            <ref bean="jobInitializer" />
+        </list>
+    </constructor-arg>	
+  </bean>
 </beans>

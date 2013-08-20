@@ -76,7 +76,8 @@ configure(javaProjects()) { subproject ->
 		jodaTimeVersion = '1.6'
 		jolokiaVersion = '1.1.2'
 		springVersion = '3.2.2.RELEASE'
-		springBatchVersion = '2.2.0.RELEASE'
+		springBatchVersion = '2.1.9.RELEASE'
+		springBatchOtherVersion = '1.2.2.RELEASE'
 		springIntegrationVersion = '3.0.0.M2'
 		springSocialVersion = '1.1.0.M3'
 		springShellVersion = '1.1.0.M1'
@@ -249,6 +250,9 @@ project('spring-xd-dirt') {
 				"org.springframework.integration:spring-integration-syslog:$springIntegrationVersion",
 				"org.springframework.integration:spring-integration-mqtt:1.0.0.M1",
 				"org.springframework.batch:spring-batch-core:$springBatchVersion",
+				"org.springframework.batch:spring-batch-infrastructure:$springBatchVersion",
+				"org.springframework.batch:spring-batch-admin-manager:$springBatchOtherVersion",
+				"org.springframework.batch:spring-batch-admin-resources:$springBatchOtherVersion",
 				"org.springframework.data:spring-data-redis:$springDataRedisVersion",
 				"org.springframework.social:spring-social-twitter:$springSocialVersion",
 				"commons-lang:commons-lang:2.4",

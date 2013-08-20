@@ -22,16 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.xd.rest.client.domain.JobDefinitionResource;
-import org.springframework.xd.rest.client.domain.StreamDefinitionResource;
-import org.springframework.xd.rest.client.domain.TapDefinitionResource;
-import org.springframework.xd.rest.client.domain.TriggerDefinitionResource;
-import org.springframework.xd.rest.client.domain.XDRuntime;
-import org.springframework.xd.rest.client.domain.metrics.AggregateCountsResource;
-import org.springframework.xd.rest.client.domain.metrics.CounterResource;
-import org.springframework.xd.rest.client.domain.metrics.FieldValueCounterResource;
-import org.springframework.xd.rest.client.domain.metrics.GaugeResource;
-import org.springframework.xd.rest.client.domain.metrics.RichGaugeResource;
 
 /**
  * @author Eric Bottard
@@ -47,31 +37,32 @@ public class AdminController {
 
 	private final EntityLinks entityLinks;
 
-	@RequestMapping()
-	@ResponseBody
-	public XDRuntime info() {
-		XDRuntime xdRuntime = new XDRuntime();
-		xdRuntime.add(entityLinks.linkFor(StreamDefinitionResource.class).withRel("streams"));
-		xdRuntime.add(entityLinks.linkFor(TriggerDefinitionResource.class).withRel("triggers"));
-		xdRuntime.add(entityLinks.linkFor(JobDefinitionResource.class).withRel("jobs"));
-		xdRuntime.add(entityLinks.linkFor(TapDefinitionResource.class).withRel("taps"));
-
-		xdRuntime.add(entityLinks.linkFor(CounterResource.class).withRel("counters"));
-		xdRuntime.add(entityLinks.linkFor(FieldValueCounterResource.class).withRel("field-value-counters"));
-		xdRuntime.add(entityLinks.linkFor(AggregateCountsResource.class).withRel("aggregate-counters"));
-		xdRuntime.add(entityLinks.linkFor(GaugeResource.class).withRel("gauges"));
-		xdRuntime.add(entityLinks.linkFor(RichGaugeResource.class).withRel("richgauges"));
-		return xdRuntime;
-	}
+	// avoid ambiguity with batch-admin
+	// @RequestMapping()
+	// @ResponseBody
+	// public XDRuntime info() {
+	// XDRuntime xdRuntime = new XDRuntime();
+	// xdRuntime.add(entityLinks.linkFor(StreamDefinitionResource.class).withRel("streams"));
+	// xdRuntime.add(entityLinks.linkFor(TriggerDefinitionResource.class).withRel("triggers"));
+	// xdRuntime.add(entityLinks.linkFor(JobDefinitionResource.class).withRel("jobs"));
+	// xdRuntime.add(entityLinks.linkFor(TapDefinitionResource.class).withRel("taps"));
+	//
+	// xdRuntime.add(entityLinks.linkFor(CounterResource.class).withRel("counters"));
+	// xdRuntime.add(entityLinks.linkFor(FieldValueCounterResource.class).withRel("field-value-counters"));
+	// xdRuntime.add(entityLinks.linkFor(AggregateCountsResource.class).withRel("aggregate-counters"));
+	// xdRuntime.add(entityLinks.linkFor(GaugeResource.class).withRel("gauges"));
+	// xdRuntime.add(entityLinks.linkFor(RichGaugeResource.class).withRel("richgauges"));
+	// return xdRuntime;
+	// }
 
 	/**
-	 * This RequestMapping exists to handle CORS requests only
-	 * Ensures that our custom HandlerInterceptor is called
- 	 */
+	 * This RequestMapping exists to handle CORS requests only Ensures that our custom
+	 * HandlerInterceptor is called
+	 */
 	@ResponseBody
-    @RequestMapping(value="**", method=RequestMethod.OPTIONS)
-    public String options() {
-       return "OK";
-   }
+	@RequestMapping(value = "**", method = RequestMethod.OPTIONS)
+	public String options() {
+		return "OK";
+	}
 
 }

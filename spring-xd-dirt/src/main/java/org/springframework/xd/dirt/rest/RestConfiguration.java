@@ -14,11 +14,14 @@
 
 package org.springframework.xd.dirt.rest;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.connector.Request;
+import org.apache.catalina.connector.RequestFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -46,9 +49,11 @@ import org.springframework.xd.rest.client.util.RestTemplateMessageConverterUtil;
 @EnableSpringDataWebSupport
 @ComponentScan(excludeFilters = @Filter(Configuration.class))
 public class RestConfiguration {
+
 	@Bean
 	public WebMvcConfigurer configurer() {
 		return new WebMvcConfigurerAdapter() {
+
 			// TODO Access-Control-Allow-Origin header should not be hard-coded
 			private static final String ALLOWED_ORIGIN = "http://localhost:9889";
 
@@ -60,6 +65,7 @@ public class RestConfiguration {
 			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
 				registry.addInterceptor(new HandlerInterceptorAdapter() {
+
 					@Override
 					public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 							throws Exception {
@@ -70,6 +76,19 @@ public class RestConfiguration {
 						}
 						if (!response.containsHeader("Access-Control-Allow-Methods")) {
 							response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+						}
+
+						// Ugh. Make spring batch work
+						if (request instanceof RequestFacade) {
+							try {
+								Field field = RequestFacade.class.getDeclaredField("request");
+								field.setAccessible(true);
+								Request request2 = (Request) field.get(request);
+								request2.getMappingData().pathInfo.setString(request2.getMappingData().wrapperPath.getString());
+							}
+							catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
 						return true;
 					}
