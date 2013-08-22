@@ -33,14 +33,15 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.util.Assert;
 
 /**
- * Base implementation for a store, using Redis behind the scenes. This implementation requires a {@code repoPrefix},
- * that is used in two ways:
+ * Base implementation for a store, using Redis behind the scenes. This implementation
+ * requires a {@code repoPrefix}, that is used in two ways:
  * <ul>
- * <li>a sorted set is stored under that exact key that tracks the entity ids this repository is responsible for,
+ * <li>a sorted set is stored under that exact key that tracks the entity ids this
+ * repository is responsible for,
  * <li>
  * <li>each entity is stored serialized under key {@code repoPrefix<id>}</li>
  * </ul>
- *
+ * 
  * @param <T> the type of things to store
  * @param <ID> a "primary key" to the things
  * @author Eric Bottard
@@ -67,7 +68,7 @@ public abstract class AbstractRedisRepository<T, ID extends Serializable> implem
 
 	@Override
 	public void delete(ID id) {
-		if (zSetOperations.remove(redisKeyFromId(id))) {
+		if (zSetOperations.remove(redisKeyFromId(id)) != null) {
 			redisOperations.delete(redisKeyFromId(id));
 		}
 	}
@@ -173,8 +174,9 @@ public abstract class AbstractRedisRepository<T, ID extends Serializable> implem
 	}
 
 	/**
-	 * Perform bookkeeping of entities managed by this repository. Uses a redis sorted set with a dummy value, which
-	 * happens to guarantee that keys for a given score are in sorted order.
+	 * Perform bookkeeping of entities managed by this repository. Uses a redis sorted set
+	 * with a dummy value, which happens to guarantee that keys for a given score are in
+	 * sorted order.
 	 */
 	protected void trackMembership(String redisKey) {
 		zSetOperations.add(redisKey, 0.0D);
@@ -190,6 +192,7 @@ public abstract class AbstractRedisRepository<T, ID extends Serializable> implem
 
 	/**
 	 * Deserialize from the String representation to the domain object.
+	 * 
 	 * @param id the entity id
 	 * @param v the serialized representation of the domain object
 	 */

@@ -53,18 +53,4 @@ public class AdminController {
 	// xdRuntime.add(entityLinks.linkFor(RichGaugeResource.class).withRel("richgauges"));
 	// return xdRuntime;
 	// }
-
-	// TODO comment out for now. Handling OPTIONS requests here is preventing the Static
-	// resource handler from
-	// serving GET requests from /admin-ui/**
-	// /**
-	// * This RequestMapping exists to handle CORS requests only Ensures that our custom
-	// HandlerInterceptor is called
-	// */
-	// @ResponseBody
-	// @RequestMapping(value = "**", method = RequestMethod.OPTIONS)
-	// public String options() {
-	// return "OK";
-	// }
-
 }

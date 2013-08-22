@@ -10,20 +10,20 @@
 	<tbody>
     <!-- requires: name, description, executionCount, isLaunchable -->
     	<% jobs.forEach(function(job) {
-    	   var details = job.name + '_details', detailsRow = job.name + '_detailsRow'; %>
+    	   var name = job.attributes.name, details = name + '_details', detailsRow = name + '_detailsRow'; %>
         <tr id="<%= name %>">
     		<td>
-    		  <button class="btn detailAction" type="button" job-name="<%= job.name %>" data-toggle="collapse" data-target="#<%= details %>">
-    		    <strong><a><%= job.name %></a>
+    		  <button class="btn detailAction" type="button" job-name="<%= name %>" data-toggle="collapse" data-target="#<%= details %>">
+    		    <strong><a><%= name %></a>
     		  </strong></button>
     		</td>
-    		<td><%= job.description %></td>
-    		<td><%= job.executionCount %></td>
+    		<td><%= job.attributes.description %></td>
+    		<td><%= job.attributes.executionCount %></td>
     		<td>
-    		  <button class="btn btn-mini launchAction <%=job.isLaunchable ? '' : 'disabled'%>" job-name="<%= job.name %>" type="button">Launch</button>
+    		  <button class="btn btn-mini launchAction <%=job.attributes.isLaunchable ? '' : 'disabled'%>" job-name="<%= name %>" type="button">Launch</button>
     	    </td>
     	</tr>
-    	<tr id="<%= detailsRow %>"><td colspan="4"><div id="<%= details %>" class="collapse in"></div></td></tr>
+    	<tr id="<%= detailsRow %>"><td colspan="4"><div id="<%= details %>" class="collapse"></div></td></tr>
         <% }); %>
 	</tbody>
 </table>
