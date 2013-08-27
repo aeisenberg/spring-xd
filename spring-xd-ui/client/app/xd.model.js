@@ -173,8 +173,9 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
                 data.jobInstances = new JobInstances(Object.keys(data.jobInstances).map(function(key) {
                     var instance = new JobInstance(data.jobInstances[key]);
                     instance.id = key;
+                    instance.set('name', this.id);
                     return instance;
-                }));
+                }, this));
             }
             return data;
         }
@@ -198,9 +199,17 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
         idAttribute: 'id',
         parse: function(response) {
             return response.jobExecution;
+        },
+        transform: function() {
+            return {
+                millis: Math.floor(Math.random() * 1000), // randomized data for now this.get('duration'),
+                name: this.id,
+                status: this.get('status')
+            };
         }
+
     });
-    var Executions = Backbone.Model.extend({
+    var Executions = Backbone.Collection.extend({
         model: Execution,
         urlRoot: URL_ROOT + 'jobs/executions/'
     });
@@ -208,7 +217,7 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
     var JobInstance = Backbone.Model.extend({
         urlRoot: URL_ROOT + 'jobs/',
         url: function() {
-            return this.urlRoot + '/' + this.get('name') + '/' + this.id + '.json';
+            return this.urlRoot + this.get('name') + '/' + this.id + '.json';
         },
         idAttribute: 'id',
         parse: function(response) {
@@ -218,12 +227,17 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
                 id: instance.id,
                 nameId: instance.name+ '/' + instance.id,
                 jobParameters: instance.jobParameters,
-                jobExecutions: new Executions(Object.keys(instance.jobExecutions).map(function(key) {
-                    var execution = new Execution(instance.jobExecutions[key]);
+                jobExecutions: new Executions(Object.keys(response.jobExecutions).map(function(key) {
+                    var execution = new Execution(response.jobExecutions[key]);
                     execution.id = key;
                     return execution;
                 }))
             };
+        },
+        transformExecutions: function() {
+            return this.get('jobExecutions').map(function(execution) {
+                return execution.transform();
+            });
         }
     });
     var JobInstances = Backbone.Collection.extend({

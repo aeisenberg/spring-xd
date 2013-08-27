@@ -5,7 +5,7 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</a>
-						<a class="span2 brand columns"><strong>Spring-XD</strong></a>
+						<a class="span2 brand columns"><strong>Spring&#8209XD</strong></a>
 						<div id="xd-tabs" class="nav-collapse collapse">
 							<ul class="nav nav-tabs columns">
 								<li class="divider-vertical"></li>

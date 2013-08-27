@@ -126,6 +126,10 @@ div #xd-content{
     position: relative;   
 }
 
+.jobInstance {
+    cursor:pointer;
+    cursor:hand;
+}
 
 /* 
 * Font styles

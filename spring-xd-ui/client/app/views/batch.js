@@ -76,7 +76,7 @@ function(_, Backbone, utils, conf, model, BatchDetail) {
                 var detailsView = expanded[job.id];
                 if (detailsView) {
                     // remove from view
-                    detailsView.$el.empty();
+                    detailsView.destroy();
                     delete expanded[job.id];
                 } else {
                     this.stopListening(model.batchJobs, 'change');
