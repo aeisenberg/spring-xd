@@ -1,3 +1,10 @@
+<div class="row">
+    <div class="span1 offset10">
+        <form class="form-search">
+            <input type="text" id="job_filter" class="input-small search-query" placeholder="Filter"/>
+        </form>
+    </div>
+</div>
 <table class="table table-bordered table-striped info-table" id="batch">
 	<thead>
 		<tr>

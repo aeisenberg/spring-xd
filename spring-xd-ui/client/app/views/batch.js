@@ -33,10 +33,33 @@ function(_, Backbone, utils, conf, model, BatchDetail) {
         return model.batchJobs.get(name);
     }
 
+	/**
+	 * Check if string 'label' contains all the characters (in the right order
+	 * but not necessarily adjacent) from charseq.
+	 *
+	 * @param {String} label the text to check
+	 * @param {String} charseq the sequence of chars to check for
+	 * @type {Boolean} true if matches
+	 */
+	function matches(label, charseq) {
+		label = label.toLowerCase();
+		var cpos = 0;
+		for (var i=0;i<label.length;i++) {
+			if (label.charAt(i)===charseq[cpos]) {
+				cpos++;
+			}
+			if (cpos===charseq.length) {
+				return true;
+			}
+		}
+		return false;
+	}
+
     var Batch = Backbone.View.extend({
         events: {
             "click button.detailAction": "showDetails",
-            "click button.launchAction": "launch"
+            "click button.launchAction": "launch",
+            "keyup input#job_filter": "filterJobs"
         },
 
         initialize: function() {
@@ -104,6 +127,25 @@ function(_, Backbone, utils, conf, model, BatchDetail) {
                     }
                 });
             }
+        },
+//10.208.4.249
+        filterJobs : function(event) {
+            var value = event.currentTarget.value;
+            // get all rows
+            var rows = $('table#batch tbody tr');
+            rows.each(function (i) {
+                var row = $(rows[i]), id = row.attr('id');
+                if (id) { // avoid the header row
+                    if (id.indexOf('_detailsRow') === id.length - '_detailsRow'.length) {
+                        id = id.substr(0, id.length - '_detailsRow'.length);
+                    }
+                    if (matches(id, value)) {
+                        row.show();
+                    } else {
+                        row.hide();
+                    }
+                }
+            });
         }
     });
     return Batch;
