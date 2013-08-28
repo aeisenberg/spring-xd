@@ -34,6 +34,7 @@ requirejs.config({
 		'bootstrap-collapse': '../bower_components/bootstrap/js/bootstrap-collapse',
 		'cubism': '../bower_components/cubism/cubism.v1',
 		'd3': '../bower_components/d3/d3',
+		'tipsy': '../bower_components/tipsy/jquery.tipsy',
 		backbone: '../bower_components/backbone-amd/backbone'
 	},
     shim: {
@@ -41,6 +42,7 @@ requirejs.config({
         'bootstrap-alert': ['jquery'],
         'bootstrap-collapse': ['jquery'],
         'bootstrap-tab': ['jquery'],
+        'tipsy': ['jquery'],
         'cubism': ['d3']
     }
 });

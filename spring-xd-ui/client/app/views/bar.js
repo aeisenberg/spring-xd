@@ -3,7 +3,7 @@
 /*global d3 */
 // Bar graph generator from http://www.d3-generator.com/
 
-define(['d3'], function() {
+define(['d3', 'tipsy'], function() {
 
     var bar = function(data, selector) {
         var valueLabelWidth = 40; // space reserved for value labels (right)
@@ -36,7 +36,8 @@ define(['d3'], function() {
         };
 
         var barHover = function(d) {
-            return 'Execution #' + d.name + ', Status ' + d.status + ', Duration ' + d.millis + 'ms';
+            return '<span style="font-size:16px">Execution ' + d.name + ': <span style="font-weight:bold; color:' + statusColor(d) + '">' +
+                d.status + '</span> Duration ' + d.millis + 'ms</span>';
         };
 
         // scales
@@ -84,9 +85,18 @@ define(['d3'], function() {
           .attr('height', yScale.rangeBand())
           .attr('width', function(d) { return x(barValue(d)); })
           .attr('stroke', 'white')
-          .attr('fill', statusColor)
-          // bar hovers
-          .append("svg:title").text(barHover);
+          .attr('fill', statusColor);
+
+        $('svg rect').tipsy({
+            gravity: 'e',
+            html: true,
+//            fade: true,
+            delayIn: 5000,
+            delayOut: 1000,
+            title: function() {
+                return barHover(this.__data__);
+            }
+        });
 
         if (data.length < 20) {
             // bar value labels

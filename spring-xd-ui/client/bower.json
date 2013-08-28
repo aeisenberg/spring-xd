@@ -11,7 +11,8 @@
     "rest": "6e099b1b47abcee85583f79a4aeef1212e3ecc1f",
     "when": "2.2.1",
     "cubism": "1.2.2",
-    "d3": "3.2.8"
+    "d3": "3.2.8",
+    "tipsy": "1.7"
   },
   "resolutions": {
     "jquery": "1.10.2"
