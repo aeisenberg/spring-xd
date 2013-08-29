@@ -104,6 +104,10 @@ a:hover {
 	color: black;
 }
 
+.jobDetailsRow {
+    display: none;
+}
+
 #streamTitle {
 	font-size: 30px;
 	padding: 30px 18px 5px;

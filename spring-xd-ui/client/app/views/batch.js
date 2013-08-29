@@ -83,7 +83,8 @@ function(_, Backbone, utils, conf, model, BatchDetail) {
                 var detailsElt = this.$el.find(detailsId);
                 if (detailsElt.length > 0) {
                     detailsElt.replaceWith(expanded[key].$el);
-                    detailsElt.collapse('show');
+                    expanded[key].$detailsRow = this.$('#' + key + '_detailsRow');
+                    expanded[key].$detailsRow.show();
                 } else {
                     // job not here any more
                     delete expanded[key];
@@ -106,7 +107,10 @@ function(_, Backbone, utils, conf, model, BatchDetail) {
                     job.fetch().then(function() {
                         var detailsView = new BatchDetail({job: job });
                         detailsView.setElement('#' + job.id + '_details');
+                        detailsView.$detailsRow = this.$('#' + job.id + '_detailsRow');
                         detailsView.render();
+                        // don't use bootstrap collapse.  See stackoverflow.com/questions/18495653/how-do-i-collapse-a-table-row-in-bootstrap/18496059#18496059
+                        detailsView.$detailsRow.show();
                         expanded[job.id] = detailsView;
                         this.listenTo(model.batchJobs, 'change', this.render);
                     }.bind(this));
@@ -128,7 +132,7 @@ function(_, Backbone, utils, conf, model, BatchDetail) {
                 });
             }
         },
-//10.208.4.249
+
         filterJobs : function(event) {
             var value = event.currentTarget.value;
             // get all rows

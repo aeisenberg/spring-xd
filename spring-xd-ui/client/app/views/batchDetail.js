@@ -58,6 +58,7 @@ function(_, Backbone, utils, conf, model, bar) {
             $(selector).empty();
             this.$el.empty();
             this.$el.unbind();
+            this.$detailsRow.hide();
             this.stopListening();
 
         }
