@@ -73,18 +73,18 @@ function(_, Backbone, utils, conf, model, BatchDetail) {
             Object.keys(expanded).forEach(function(key) {
                 expanded[key].remove();
             }, this);
-
             this.$el.html(_.template(utils.getTemplate(conf.templates.batchList), { jobs :model.batchJobs.models }));
-
 
             // now add the expanded nodes back
             Object.keys(expanded).forEach(function(key) {
                 var detailsId = '#' + key + '_details';
                 var detailsElt = this.$el.find(detailsId);
                 if (detailsElt.length > 0) {
-                    detailsElt.replaceWith(expanded[key].$el);
-                    expanded[key].$detailsRow = this.$('#' + key + '_detailsRow');
-                    expanded[key].$detailsRow.show();
+                    var detailsView = expanded[key];
+                    detailsElt.replaceWith(detailsView.$el);
+                    detailsView.$detailsRow = this.$('#' + key + '_detailsRow');
+                    detailsView.$detailsRow.show();
+                    detailsView.delegateEvents(detailsView.events);
                 } else {
                     // job not here any more
                     delete expanded[key];

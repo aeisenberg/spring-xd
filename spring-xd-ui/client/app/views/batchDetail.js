@@ -36,10 +36,13 @@ function(_, Backbone, utils, conf, model, bar) {
             if (this.currentExecutionId) {
                 this.showExecutions(this.currentExecutionId);
             }
+            this.delegateEvents(this.events);
             return this;
         },
 
         showExecutions : function(event) {
+            // de-select all rows
+            this.$('table.info-table tr').removeClass('info');
             var selector = '#' + this.options.job.id + '-executions';
             $(selector).empty();
             var id = event.currentTarget ? event.currentTarget.getAttribute('instanceId') : event;
@@ -48,6 +51,9 @@ function(_, Backbone, utils, conf, model, bar) {
                 jobInstance.fetch({ merge:true, update:true }).then(function() {
                     var graph = bar(jobInstance.transformExecutions(), selector);
                     this.currentExecutionId = id;
+
+                    // select this row
+                    this.$('tr#' + this.options.job.id + '-instance-' + id).addClass('info');
                 }.bind(this));
             }
         },

@@ -24,7 +24,13 @@
 	</batch:job>
 
 	<batch:job id="job2" parent="simpleJob" xmlns="http://www.springframework.org/schema/batch">
-		<batch:step id="j2.s1" parent="step1:master" />
+		<batch:step id="j2.s1" parent="step1" />
+	</batch:job>
+	<batch:job id="job3" parent="simpleJob" xmlns="http://www.springframework.org/schema/batch">
+		<batch:step id="j3.s1" parent="step1" />
+	</batch:job>
+	<batch:job id="job4" parent="simpleJob" xmlns="http://www.springframework.org/schema/batch">
+		<batch:step id="j4.s1" parent="step1" />
 	</batch:job>
 
 	<batch:job id="infinite" parent="simpleJob" xmlns="http://www.springframework.org/schema/batch" incrementer="incrementer">

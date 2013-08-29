@@ -2,7 +2,7 @@
     <div class="offset1 span6">
         <h5>Instances of job <%= name %></h5>
         <table class="table table-bordered table-striped info-table table-hover" id="batch-instances-<%= name %>">
-        <thead>
+            <thead>
         		<tr>
         			<td>ID</td>
         			<td>Execution count</td>
