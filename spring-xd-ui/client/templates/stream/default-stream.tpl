@@ -4,7 +4,6 @@
     					<span class="add-on"><strong>Name</strong></span>
     					<input type="text" id="stream-name">
     				</div>
-					<button id="custom-options" class="btn btn-mini"><strong>More options</strong></button> 
 				</div>
     			<div class="row">
     				<div class="input-prepend module-input">

@@ -54,8 +54,6 @@ define(function() {
         artifactsListItem: conf.templateRoot + 'dashboard/artifacts-list-item.tpl',
         streamDetail: conf.templateRoot + 'dashboard/stream-detail.tpl',
         createDefaultStream : conf.templateRoot + 'stream/default-stream.tpl',
-        createCustomStream : conf.templateRoot + 'stream/custom-stream.tpl',
-        moduleSelectOptions: conf.templateRoot + 'stream/module/select-options.tpl',
         streamParameter: conf.templateRoot + 'stream/module/parameter-text.tpl',
         tapStream : conf.templateRoot + 'stream/tap-stream.tpl',
         scheduleJob : conf.templateRoot + 'job/schedule-job.tpl',
