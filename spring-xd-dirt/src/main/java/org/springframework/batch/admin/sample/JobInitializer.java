@@ -19,10 +19,10 @@ package org.springframework.batch.admin.sample;
 import javax.annotation.PostConstruct;
 
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.DuplicateJobException;
 import org.springframework.batch.core.configuration.JobFactory;
 import org.springframework.batch.core.configuration.JobRegistry;
-import org.springframework.batch.core.partition.support.PartitionStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -44,12 +44,21 @@ public class JobInitializer {
 	@Qualifier("job2")
 	Job job2;
 
-	@Autowired(required = true)
-	@Qualifier("step1:master")
-	private PartitionStep step1;
+	@Autowired
+	@Qualifier("job3")
+	Job job3;
 
-	public JobInitializer() {
-	}
+	@Autowired
+	@Qualifier("job4")
+	Job job4;
+
+	@Autowired
+	@Qualifier("infinite")
+	Job infinite;
+
+	@Autowired(required = true)
+	@Qualifier("step1")
+	private Step step1;
 
 	@PostConstruct
 	public void initialize() throws DuplicateJobException {
@@ -75,6 +84,42 @@ public class JobInitializer {
 			@Override
 			public Job createJob() {
 				return job2;
+			}
+		});
+		jobRegistry.register(new JobFactory() {
+
+			@Override
+			public String getJobName() {
+				return "job3";
+			}
+
+			@Override
+			public Job createJob() {
+				return job3;
+			}
+		});
+		jobRegistry.register(new JobFactory() {
+
+			@Override
+			public String getJobName() {
+				return "job4";
+			}
+
+			@Override
+			public Job createJob() {
+				return job4;
+			}
+		});
+		jobRegistry.register(new JobFactory() {
+
+			@Override
+			public String getJobName() {
+				return "infinite";
+			}
+
+			@Override
+			public Job createJob() {
+				return infinite;
 			}
 		});
 	}
