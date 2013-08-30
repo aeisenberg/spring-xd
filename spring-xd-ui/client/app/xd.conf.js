@@ -24,9 +24,9 @@
 */
 
 define(function() {
+    'use strict';
 
     var URL_ROOT = 'http://localhost:8080/';
-
     var conf = {
         urlRoot: URL_ROOT,
         moduleRoot: URL_ROOT + 'modules/',
