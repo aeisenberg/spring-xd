@@ -50,5 +50,5 @@ requirejs.config({
 require(['backbone', 'xd.router', 'xd.viewer',  'xd.model', 'd3', 'cubism', 'bootstrap-typeahead', 'bootstrap-tab', 'bootstrap-alert', 'bootstrap-collapse'],
 function(Backbone, router, viewer, model) {
     new router.xdRouter(viewer);
-    Backbone.history.start();
+    Backbone.history.start({pushState: true, root: "/admin-ui/"});
 });
