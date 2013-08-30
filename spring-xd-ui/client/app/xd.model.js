@@ -108,19 +108,22 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
 
     // the query kinds we care about for now
     // TODO this can be done better
-    model.artifactKinds = ['streams', 'taps', /*'jobs',*/ 'triggers', 'richgauges', 'gauges', 'field-value-counters', 'counters', 'aggregate-counters'];
-    model.artifactUrls = ['streams', 'taps', /*'jobs',*/ 'triggers', 'metrics/richgauges', 'metrics/gauges', 'metrics/field-value-counters', 'metrics/counters', 'metrics/aggregate-counters'];
-    model.readableNames = [
-        { kind: 'streams', name: 'Streams' },
-        { kind: 'taps', name: 'Taps' },
-//        { kind: 'jobs', name: 'Jobs' },
-        { kind: 'triggers', name: 'Triggers' },
-        { kind: 'counters', name: 'Counters' },
-        { kind: 'field-value-counters', name: 'Field Value Counters' },
-        { kind: 'aggregate-counters', name: 'Aggregate Counters' },
-        { kind: 'gauges', name: 'Gauges' },
-        { kind: 'richgauges', name: 'Rich Gauges' }
-    ];
+    // this part of ui is disabled
+    model.artifactKinds = model.artifactUrls = model.readableNames = [];
+//     model.artifactKinds = ['streams', 'taps', /*'jobs',*/ 'triggers', 'richgauges', 'gauges', 'field-value-counters', 'counters', 'aggregate-counters'];
+//     model.artifactUrls = ['streams', 'taps', /*'jobs',*/ 'triggers', 'metrics/richgauges', 'metrics/gauges', 'metrics/field-value-counters', 'metrics/counters', 'metrics/aggregate-counters'];
+//     model.readableNames = [
+//         { kind: 'streams', name: 'Streams' },
+//         { kind: 'taps', name: 'Taps' },
+// //        { kind: 'jobs', name: 'Jobs' },
+//         { kind: 'triggers', name: 'Triggers' },
+//         { kind: 'counters', name: 'Counters' },
+//         { kind: 'field-value-counters', name: 'Field Value Counters' },
+//         { kind: 'aggregate-counters', name: 'Aggregate Counters' },
+//         { kind: 'gauges', name: 'Gauges' },
+//         { kind: 'richgauges', name: 'Rich Gauges' }
+//     ];
+
 
     model.artifactKinds.forEach(function(kind) {
         model.addQuery(kind);
