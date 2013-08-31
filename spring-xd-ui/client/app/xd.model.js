@@ -181,7 +181,7 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
                 }, this));
             }
             return data;
-        }
+        },
     });
     var BatchJobs = Backbone.Collection.extend({
         model: BatchJob,
@@ -191,7 +191,8 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
             return Object.keys(data.jobs.registrations).map(function(key) {
                 return data.jobs.registrations[key];
             });
-        }
+        },
+        comparator: 'name'
     });
 
     var Execution = Backbone.Model.extend({
