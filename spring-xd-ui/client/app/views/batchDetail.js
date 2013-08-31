@@ -42,17 +42,17 @@ function(_, Backbone, utils, conf, model, bar) {
 
         showExecutions : function(event) {
             // de-select all rows
-            this.$('table.info-table tr').removeClass('info');
             var selector = '#' + this.options.job.id + '-executions';
-            $(selector).empty();
             var id = event.currentTarget ? event.currentTarget.getAttribute('instanceId') : event;
             var jobInstance = this.options.job.attributes.jobInstances.get(id);
             if (jobInstance) {
                 jobInstance.fetch({ merge:true, update:true }).then(function() {
+                    $(selector).empty();
                     var graph = bar(jobInstance.transformExecutions(), selector);
                     this.currentExecutionId = id;
 
                     // select this row
+                    this.$('table.info-table tr').removeClass('info');
                     this.$('tr#' + this.options.job.id + '-instance-' + id).addClass('info');
                 }.bind(this));
             }

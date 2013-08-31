@@ -136,15 +136,21 @@ function(_, Backbone, utils, conf, model, BatchDetail) {
         filterJobs : function(event) {
             var value = event.currentTarget.value;
             // get all rows
-            var rows = $('table#batch tbody tr');
+            var rows = this.$('table#batch > tbody > tr');
             rows.each(function (i) {
                 var row = $(rows[i]), id = row.attr('id');
+                var isDetails;
                 if (id) { // avoid the header row
                     if (id.indexOf('_detailsRow') === id.length - '_detailsRow'.length) {
                         id = id.substr(0, id.length - '_detailsRow'.length);
+                        isDetails = true;
                     }
                     if (matches(id, value)) {
-                        row.show();
+                        if (!isDetails || expanded[id]) {
+                            // never show details...this is wrong, but OK for now
+                            // we are forgetting where details used to be shown
+                            row.show();
+                        }
                     } else {
                         row.hide();
                     }
