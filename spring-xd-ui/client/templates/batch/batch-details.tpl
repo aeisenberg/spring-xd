@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="offset1 span6">
+    <div class="span5">
         <h5>Instances of job <%= name %></h5>
         <table class="table table-bordered table-striped info-table table-hover" id="batch-instances-<%= name %>">
             <thead>
@@ -26,7 +26,8 @@
         	           alertClass = 'alert alert-success';
         	           break;
         	   }
-        	%><tr id="<%= name %>-instance-<%= jobModel.id %>" class="jobInstance" instanceId="<%= jobModel.id %>">
+        	%>
+            <tr id="<%= name %>-instance-<%= jobModel.id %>" class="jobInstance" instanceId="<%= jobModel.id %>">
         	    <td><%= jobModel.id %></td>
         	    <td><%= jobInstance.executionCount %></td>
         	    <td><div class="<%= alertClass %>">

@@ -1,14 +1,14 @@
 <form class="form-horizontal" id="xd-scheduleJob-form">
     			<div class="row">
     				<div class="input-prepend module-input">
-    					<span class="add-on"><strong>Name</span>
-    					<input type="text" id="job-name"></input>
+    					<span class="add-on"><strong>Name</strong></span>
+    					<input type="text" id="job-name"/>
     				</div> 
     			</div>
 		  		<div class="row">
 		  			<div class="input-prepend module-input">
-						<span class="add-on"><strong>Definition</span>
-    					<input type="text" id="job-definition">
+						<span class="add-on"><strong>Definition</strong></span>
+    					<input type="text" id="job-definition"/>
 		  			</div>
 		  		</div>
 		  		<div class="row">
