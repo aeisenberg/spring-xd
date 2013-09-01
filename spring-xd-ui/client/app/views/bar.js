@@ -90,9 +90,9 @@ define(['d3', 'tipsy'], function() {
         $('svg rect').tipsy({
             gravity: 'e',
             html: true,
-//            fade: true,
-            delayIn: 5000,
-            delayOut: 1000,
+            fade: true,
+            delayIn: 150,
+            delayOut: 150,
             title: function() {
                 return barHover(this.__data__);
             }
