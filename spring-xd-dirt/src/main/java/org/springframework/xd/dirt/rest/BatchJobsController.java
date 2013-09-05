@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.springframework.batch.admin.service.JobService;
 import org.springframework.batch.admin.web.JobInfo;
-import org.springframework.batch.admin.web.JobInstanceInfo;
 import org.springframework.batch.core.JobInstance;
 import org.springframework.batch.core.launch.NoSuchJobException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +87,7 @@ public class BatchJobsController {
 			@RequestParam(defaultValue = "0") int startJobInstance, @RequestParam(defaultValue = "20") int pageSize) {
 		Collection<JobInstance> jobInstances = new ArrayList<JobInstance>();
 		String fullName = jobName + ".job";
-		
+
 		try {
 			jobInstances = jobService.listJobInstances(fullName, startJobInstance, pageSize);
 			// TODO: Need to add the jobExecutions for each jobInstance
@@ -99,7 +98,7 @@ public class BatchJobsController {
 		return jobInstances;
 	}
 
-	@RequestMapping(value = "/{jobName}/info", method = RequestMethod.GET)
+	@RequestMapping(value = "/{jobName}", method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public JobInfo jobinfo(ModelMap model, @PathVariable String jobName) {
