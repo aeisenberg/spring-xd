@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="span5">
+    <div class="span5 offset1">
         <h5>Instances of job <%= name %></h5>
         <table class="table table-bordered table-striped info-table table-hover" id="batch-instances-<%= name %>">
             <thead>

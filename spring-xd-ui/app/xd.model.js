@@ -156,14 +156,37 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
         },
         idAttribute: 'name',
         launch: function(parameters) {
-            return client({
-                path: this.url(),
+            var streamName = 'jobLaunchTrigger' + new Date();
+            var streamDefinition = 'trigger > :job:' + this.id;
+            // for now must create a stream that triggers job and then delete stream
+           var createPromise = client({
+                path: URL_ROOT + 'streams',
+                params: { name : streamName, definition: streamDefinition },
                 method: 'POST',
                 headers: ACCEPT_HEADER
-            }).then(function() {
-                // get the latest execution count for the job
-                model.batchJobs.fetch({merge:true, update:true });
             });
+            
+            var deletePromise = createPromise.then(function() {
+                return client({
+                    path: URL_ROOT + 'streams/' + streamName,
+                    method: 'DELETE',
+                    headers: ACCEPT_HEADER
+                });
+
+            });
+            return deletePromise.then(function() {
+                // get the latest execution count for the job
+                return model.batchJobs.fetch({merge:true, update:true });
+            });
+                
+//            return client({
+//                path: this.url(),
+//                method: 'POST',
+//                headers: ACCEPT_HEADER
+//            }).then(function() {
+//                // get the latest execution count for the job
+//                model.batchJobs.fetch({merge:true, update:true });
+//            });
         },
 
         parse: function(data) {
@@ -181,6 +204,9 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
                     instance.set('name', this.id);
                     return instance;
                 }, this));
+            } else {
+                data.jobInstances = new JobInstances();
+                data.jobInstances.jobName = this.id;
             }
             return data;
         }
@@ -191,9 +217,6 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
 
         parse: function(data) {
             return data;
-//            return Object.keys(data.jobs.registrations).map(function(key) {
-//                return data.jobs.registrations[key];
-//            });
         },
         comparator: 'name'
     });
@@ -227,18 +250,20 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
             return this.urlRoot + this.get('name') + '/' + this.id + '.json';
         },
         idAttribute: 'id',
-        parse: function(response) {
-            var instance = response.jobInstance;
+        parse: function(instance) {
             return {
                 name: instance.jobName,
                 id: instance.id,
+                version: instance.version,
                 nameId: instance.name+ '/' + instance.id,
                 jobParameters: instance.jobParameters,
-                jobExecutions: new Executions(Object.keys(response.jobExecutions).map(function(key) {
-                    var execution = new Execution(response.jobExecutions[key]);
-                    execution.id = key;
-                    return execution;
-                }))
+                jobExecutions: instance.jobExecutions ?
+                    new Executions(Object.keys(instance.jobExecutions).map(function(key) {
+                        var execution = new Execution(instance.jobExecutions[key]);
+                        execution.id = key;
+                        return execution;
+                    })) :
+                    new Executions()
             };
         },
         transformExecutions: function() {
@@ -248,7 +273,11 @@ function(Backbone, rest, entity, mime, hateoas, errorcode) {
         }
     });
     var JobInstances = Backbone.Collection.extend({
-        model: JobInstance
+        model: JobInstance,
+        urlRoot: URL_ROOT + 'batch/jobs/',
+        url: function() {
+            return this.urlRoot + this.jobName + '/instances.json';
+        }
     });
 
 

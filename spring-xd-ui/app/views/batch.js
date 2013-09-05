@@ -33,27 +33,27 @@ function(_, Backbone, utils, conf, model, BatchDetail) {
         return model.batchJobs.get(name);
     }
 
-	/**
-	 * Check if string 'label' contains all the characters (in the right order
-	 * but not necessarily adjacent) from charseq.
-	 *
-	 * @param {String} label the text to check
-	 * @param {String} charseq the sequence of chars to check for
-	 * @type {Boolean} true if matches
-	 */
-	function matches(label, charseq) {
-		label = label.toLowerCase();
-		var cpos = 0;
-		for (var i=0;i<label.length;i++) {
-			if (label.charAt(i)===charseq[cpos]) {
-				cpos++;
-			}
-			if (cpos===charseq.length) {
-				return true;
-			}
-		}
-		return false;
-	}
+    /**
+     * Check if string 'label' contains all the characters (in the right order
+     * but not necessarily adjacent) from charseq.
+     *
+     * @param {String} label the text to check
+     * @param {String} charseq the sequence of chars to check for
+     * @type {Boolean} true if matches
+     */
+    function matches(label, charseq) {
+        label = label.toLowerCase();
+        var cpos = 0;
+        for (var i=0;i<label.length;i++) {
+            if (label.charAt(i)===charseq[cpos]) {
+                cpos++;
+            }
+            if (cpos===charseq.length) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     var Batch = Backbone.View.extend({
         events: {
@@ -105,14 +105,16 @@ function(_, Backbone, utils, conf, model, BatchDetail) {
                 } else {
                     this.stopListening(model.batchJobs, 'change');
                     job.fetch().then(function() {
-                        var detailsView = new BatchDetail({job: job });
-                        detailsView.setElement('#' + job.id + '_details');
-                        detailsView.$detailsRow = this.$('#' + job.id + '_detailsRow');
-                        detailsView.render();
-                        // don't use bootstrap collapse.  See stackoverflow.com/questions/18495653/how-do-i-collapse-a-table-row-in-bootstrap/18496059#18496059
-                        detailsView.$detailsRow.show();
-                        expanded[job.id] = detailsView;
-                        this.listenTo(model.batchJobs, 'change', this.render);
+                        job.get('jobInstances').fetch().then(function() {
+                            var detailsView = new BatchDetail({job: job });
+                            detailsView.setElement('#' + job.id + '_details');
+                            detailsView.$detailsRow = this.$('#' + job.id + '_detailsRow');
+                            detailsView.render();
+                            // don't use bootstrap collapse.  See stackoverflow.com/questions/18495653/how-do-i-collapse-a-table-row-in-bootstrap/18496059#18496059
+                            detailsView.$detailsRow.show();
+                            expanded[job.id] = detailsView;
+                            this.listenTo(model.batchJobs, 'change', this.render);
+                        }.bind(this));
                     }.bind(this));
                 }
             }
